@@ -13,6 +13,8 @@ import Styles from './style';
 import Label from '../../components/label';
 import Slider from '../../components/slider';
 import Button from '../../components/button';
+import Modal from '../../components/modal';
+
 
 const getRandomNumber = () => Math.round((Math.random() * (100 - 1) + 1),1);
 
@@ -20,6 +22,7 @@ export default class Home extends Component {
   state = {
     score: 0,
     round: 1,
+    isModalOpen: false,
     sliderValue: getRandomNumber(),
     bullEyes: getRandomNumber()
   }
@@ -92,6 +95,12 @@ export default class Home extends Component {
     });
   }
 
+  onPressModal = (value) => {
+    this.setState({
+      isModalOpen: value
+    });
+  }
+
   renderSlider() {
     return (
       <View style={{flex: 1}}>
@@ -120,10 +129,11 @@ export default class Home extends Component {
               title="Reset"
           />
           <Button
-              onPress={() => console.warn('button pressed')}
+              onPress={() => this.onPressModal(true)}
               styles={{alignSelf: 'center'}}
               title="Help"
           />
+        <Modal modalVisible={this.state.isModalOpen} onPress={this.onPressModal} />
       </View>
     );
   }
